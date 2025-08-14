@@ -1,0 +1,37 @@
+[project]
+name = "lets"
+version = "0.1.0"
+description = "AI-powered development workspace setup tool"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "click>=8.2.1",
+  "rich>=14.1.0",
+  "xdg-base-dirs>=6.0.1",
+  "pydantic-settings>=2.10.1",
+  "tomli-w>=1.0.0",
+]
+
+[project.scripts]
+lets = "lets.cli:main"
+
+[dependency-groups]
+dev = ["pyright>=1.1.403", "ruff>=0.12.8"]
+
+[build-system]
+requires = ["uv_build"]
+build-backend = "uv_build"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["COM812", "S603", "S604"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+include = ["."]
+exclude = [".venv"]
+pythonVersion = "3.12"

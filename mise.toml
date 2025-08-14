@@ -1,0 +1,27 @@
+[env]
+_.python.venv = { path = ".venv" } # Automatically create a virtual environment
+_.file = '.env'                    # Automatically load .env files
+
+# Deps
+[tasks.install]
+run = ["uv sync --all-groups --all-extras"]
+
+# Code
+[tasks."format:ruff"]
+run = ["uv run ruff format"]
+
+[tasks.format]
+depends = ["format:*"]
+
+[tasks."check:ruff"]
+run = ["uv run ruff check"]
+
+[tasks."check:pyright"]
+run = ["uv run pyright"]
+
+[tasks.check]
+depends = ["check:*"]
+
+# AI
+[tasks.claude]
+run = ["claude --dangerously-skip-permissions"]
