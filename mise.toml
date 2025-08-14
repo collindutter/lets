@@ -1,0 +1,46 @@
+[env]
+_.python.venv = { path = ".venv" } # Automatically create a virtual environment
+_.file = '.env'                    # Automatically load .env files
+
+# Deps
+[tasks.install]
+run = ["uv sync --all-groups --all-extras"]
+
+# Code
+[tasks."format:ruff"]
+run = ["uv run ruff format"]
+
+[tasks.format]
+depends = ["format:*"]
+
+[tasks."check:ruff"]
+run = ["uv run ruff check"]
+
+[tasks."check:pyright"]
+run = ["uv run pyright"]
+
+[tasks.check]
+depends = ["check:*"]
+
+# Testing
+[tasks.test]
+run = ["uv run pytest"]
+
+[tasks."test:unit"]
+run = ["uv run pytest -m unit"]
+
+[tasks."test:integration"] 
+run = ["uv run pytest -m integration"]
+
+[tasks."test:coverage"]
+run = ["uv run pytest --cov=src --cov-report=html --cov-report=term-missing --cov-fail-under=97"]
+
+[tasks."test:coverage-xml"]
+run = ["uv run pytest --cov=src --cov-report=xml --cov-fail-under=97"]
+
+[tasks."test:watch"]
+run = ["uv run pytest --watch"]
+
+# AI
+[tasks.claude]
+run = ["claude --dangerously-skip-permissions"]

@@ -1,0 +1,55 @@
+# Coverage configuration file
+# This file provides additional coverage configuration beyond pyproject.toml
+
+[run]
+# Source directories to measure coverage for
+source = src
+
+# Enable branch coverage (measure both line and branch coverage)
+branch = true
+
+# Files to omit from coverage reporting
+omit = 
+    tests/*
+    */conftest.py
+    */__main__.py
+    */venv/*
+    */.venv/*
+
+[report]
+# Lines to exclude from coverage reporting
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+    
+    # Don't complain about missing debug-only code:
+    def __repr__
+    if self\.debug
+    
+    # Don't complain if tests don't hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementedError
+    
+    # Don't complain if non-runnable code isn't run:
+    if 0:
+    if __name__ == .__main__.:
+    
+    # Don't complain about abstract methods, they aren't run:
+    @(abc\.)?abstractmethod
+
+# Show line numbers of missing lines
+show_missing = true
+
+# Number of decimal places for coverage percentage
+precision = 2
+
+# Fail if coverage is below this percentage
+fail_under = 40
+
+[html]
+# Directory for HTML coverage reports
+directory = htmlcov
+
+[xml]
+# Output file for XML coverage reports (for CI/CD)
+output = coverage.xml
