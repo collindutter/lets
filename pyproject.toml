@@ -17,6 +17,7 @@ lets = "lets.cli:main"
 
 [dependency-groups]
 dev = ["pyright>=1.1.403", "ruff>=0.12.8"]
+test = ["pytest>=8.0.0", "pytest-cov>=6.0.0", "pytest-mock>=3.14.0"]
 
 [build-system]
 requires = ["uv_build"]
@@ -25,6 +26,9 @@ build-backend = "uv_build"
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = ["COM812", "S603", "S604"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]  # Allow assert statements in tests
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -35,3 +39,45 @@ venv = ".venv"
 include = ["."]
 exclude = [".venv"]
 pythonVersion = "3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "slow: Slow running tests",
+]
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+omit = [
+    "tests/*",
+    "*/conftest.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+show_missing = true
+precision = 2
+fail_under = 97
+
+[tool.coverage.html]
+directory = "htmlcov"

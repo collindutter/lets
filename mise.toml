@@ -22,6 +22,25 @@ run = ["uv run pyright"]
 [tasks.check]
 depends = ["check:*"]
 
+# Testing
+[tasks.test]
+run = ["uv run pytest"]
+
+[tasks."test:unit"]
+run = ["uv run pytest -m unit"]
+
+[tasks."test:integration"] 
+run = ["uv run pytest -m integration"]
+
+[tasks."test:coverage"]
+run = ["uv run pytest --cov=src --cov-report=html --cov-report=term-missing --cov-fail-under=97"]
+
+[tasks."test:coverage-xml"]
+run = ["uv run pytest --cov=src --cov-report=xml --cov-fail-under=97"]
+
+[tasks."test:watch"]
+run = ["uv run pytest --watch"]
+
 # AI
 [tasks.claude]
 run = ["claude --dangerously-skip-permissions"]
